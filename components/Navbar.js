@@ -14,7 +14,6 @@ export default class Navbar extends Component {
               <option>Date ASC</option>
             </select>
           </span>
-          <button className="btn btn-success-outline btn-sm" type="submit">Search</button>
         </form>
       </nav>
     );
