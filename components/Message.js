@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react/addons';
 import Comment from './Comment';
+import classNames from 'classnames';
 
 export default class Message extends Component{
   constructor(props) {
@@ -57,7 +58,7 @@ export default class Message extends Component{
               <span className="fa fa-chevron-down"></span>{message.bad}
             </button>
             &nbsp;
-            <button className="btn btn-sm btn-primary hack-btn" onClick={messageClick}>
+            <button className={classNames('btn', 'btn-sm', 'btn-primary', 'hack-btn',{'active': message.clicked})} onClick={messageClick}>
               {message.clicked ? 'Hide' : 'Show'} Comments
             </button>
             &nbsp;·&nbsp;
