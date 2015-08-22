@@ -1,17 +1,17 @@
 import React, { PropTypes, Component} from 'react/addons';
 
 export default class Marker extends Component {
-  onMessageHovered(uid) {
-    this.props.onMessageHovered(uid);
+  onMessageHovered(_id) {
+    this.props.onMessageHovered(_id);
   }
 
-  onMessageUnHovered(uid) {
-    this.props.onMessageUnHovered(uid);
+  onMessageUnHovered(_id) {
+    this.props.onMessageUnHovered(_id);
   }
 
   render() {
     const K_SIZE = 20;
-    const { uid, lat, lng, children } = this.props;
+    const { _id, lat, lng } = this.props;
     const styles = {
       position: 'absolute',
       width: K_SIZE,
@@ -36,12 +36,11 @@ export default class Marker extends Component {
       color: '#f44336'
     };
 
-    const messageHover = this.onMessageHovered.bind(this, uid);
-    const messageUnHover = this.onMessageUnHovered.bind(this, uid);
+    const messageHover = this.onMessageHovered.bind(this, _id);
+    const messageUnHover = this.onMessageUnHovered.bind(this, _id);
 
     return (
       <div lat={lat} lng={lng} onMouseEnter={messageHover} onMouseLeave={messageUnHover} style={this.props.hovered ? hoverStyles : styles}>
-        {children}
       </div>
     );
   }

@@ -17,61 +17,55 @@ export default class Root extends Component {
     // geolocation.getCurrentPosition((position) => {
     //
     // });
-    const marker = this.getMarker().map((data) => {
-      data.properties['clicked'] = false;
-      data.properties['hovered'] = false;
+    const markers = this.getMarkers().map((data) => {
+      data.clicked = false;
+      data.hovered = false;
       return data;
     });
 
     this.state = {
-      marker
+      markers
     };
   }
 
-  getMarker() {
+  getMarkers() {
     return [
       {
-        uid: 0,
-        type: 'Message',
-        geometry: {
-          type: 'Point',
-          coordinates: [25.021667, 121.535386]
+        _id: 0,
+        loc: {
+          lng: 121.535386,
+          lat: 25.021667,
         },
-        properties: {
-          title: 'HachNTU',
-          content: '我在被虐天氣晴',
-          good: 18,
-          bad: 3,
-          didgood: true,
-          didbad: false,
-          time: '2015/8/22 00:15:00',
-        }
+        title: 'HachNTU',
+        content: '我在被虐天氣晴',
+        good: 18,
+        bad: 3,
+        didgood: true,
+        didbad: false,
+        time: '2015/8/22 00:15:00',
       },
       {
-        uid: 1,
-        type: 'Message',
-        geometry: {
-          type: 'Point',
-          coordinates: [25.020506, 121.533868]
+        _id: 1,
+        loc: {
+          lng: 121.533868,
+          lat: 25.020506,
         },
-        properties: {
-          title: '牛肉麵',
-          content: '好ㄘ',
-          good: 38,
-          bad: 1,
-          didgood: false,
-          didbad: false,
-          time: '2015/8/21 17:15:00',
-        }
+        title: '牛肉麵',
+        content: '好ㄘ',
+        good: 38,
+        bad: 1,
+        didgood: false,
+        didbad: false,
+        time: '2015/8/21 17:15:00',
       }
     ]
   }
 
-  getComments(uid) {
-    if (uid == 0) {
+  getComments(_id) {
+    if (_id == 0) {
       return [
         {
-          uid: 0,
+          _id: 0,
           content: 'ㄇㄉ做不出來卡關啦',
           good: 3,
           bad: 0,
@@ -80,7 +74,7 @@ export default class Root extends Component {
           time: '2015/8/22 03:15:00'
         },
         {
-          uid: 1,
+          _id: 1,
           content: '我烏雲籠罩，幹',
           good: 5,
           bad: 1,
@@ -92,7 +86,7 @@ export default class Root extends Component {
     } else {
       return [
         {
-          uid: 0,
+          _id: 0,
           content: '我也有吃',
           good: 6,
           bad: 0,
@@ -104,56 +98,56 @@ export default class Root extends Component {
     }
   }
 
-  onMessageClicked(uid) {
-    const marker = this.state.marker.map((data) => {
-      if (! data.properties.clicked && data.uid == uid) {
-        data.properties.clicked = true;
-        data.properties.comments = this.getComments(uid);
+  onMessageClicked(_id) {
+    const markers = this.state.markers.map((data) => {
+      if (! data.clicked && data._id == _id) {
+        data.clicked = true;
+        data.comments = this.getComments(_id);
       } else {
-        data.properties.clicked = false;
-        data.properties.comments = null;
+        data.clicked = false;
+        data.comments = null;
       }
 
       return data;
     });
 
-    this.setState({ marker });
+    this.setState({ markers });
   }
 
-  onMarkerOrMessageHover(uid) {
-    const marker = this.state.marker.map((data) => {
-      if (data.uid == uid) {
-        data.properties.hovered = true;
+  onMarkerOrMessageHover(_id) {
+    const markers = this.state.markers.map((data) => {
+      if (data._id == _id) {
+        data.hovered = true;
       } else {
-        data.properties.hovered = false;
+        data.hovered = false;
       }
       return data;
     });
 
-    this.setState({ marker });
+    this.setState({ markers });
   }
 
-  onMarkerOrMessageUnHover(uid) {
-    const marker = this.state.marker.map((data) => {
-      data.properties.hovered = false;
+  onMarkerOrMessageUnHover(_id) {
+    const markers = this.state.markers.map((data) => {
+      data.hovered = false;
       return data;
     });
 
-    this.setState({ marker });
+    this.setState({ markers });
   }
 
   render() {
-    const { marker } = this.state;
+    const { markers } = this.state;
     return (
       <div>
         <MainMap
-          marker={marker}
+          markers={markers}
           onMessageClicked={::this.onMessageClicked}
           onMessageHovered={::this.onMarkerOrMessageHover}
           onMessageUnHovered={::this.onMarkerOrMessageUnHover}
         />
         <Sidebar
-          marker={marker}
+          markers={markers}
           onMessageClicked={::this.onMessageClicked}
           onMessageHovered={::this.onMarkerOrMessageHover}
           onMessageUnHovered={::this.onMarkerOrMessageUnHover}

@@ -19,15 +19,17 @@ export default class Message extends Component{
   }
 
   render() {
-    const { uid, message } = this.props;
-    const messageClick = this.onMessageClicked.bind(this, uid);
-    const messageHover = this.onMessageHovered.bind(this, uid);
-    const messageUnHover = this.onMessageUnHovered.bind(this, uid);
+    const { message } = this.props;
+    const messageClick = this.onMessageClicked.bind(this, message._id);
+    const messageHover = this.onMessageHovered.bind(this, message._id);
+    const messageUnHover = this.onMessageUnHovered.bind(this, message._id);
     let commentBox;
 
     if (message.clicked) {
       const comments = message.comments.map((comment) => {
-        return <Comment key={comment.uid} comment={comment} />;
+        return (
+          <Comment key={comment._id} comment={comment} />
+        );
       });
 
       commentBox = (

@@ -4,7 +4,6 @@ import Marker from './Marker';
 
 export default class MainMap extends Component {
   render() {
-    const { marker } = this.props;
     const styles = {
       position: 'absolute',
       left: 0,
@@ -13,16 +12,17 @@ export default class MainMap extends Component {
       height: '100%',
     };
 
-    const markers = marker.map((data)=> {
-      console.log(data);
-      const [lat, lng] = data.geometry.coordinates;
+    const markers = this.props.markers.map((data)=> {
+      const { _id, hovered } = data;
+      const { lat, lng } = data.loc;
+
       return (
         <Marker
-          key={data.uid}
-          uid={data.uid}
+          key={_id}
+          _id={_id}
           lat={lat}
           lng={lng}
-          hovered={data.properties.hovered}
+          hovered={hovered}
           onMessageClicked={this.props.onMessageClicked}
           onMessageHovered={this.props.onMessageHovered}
           onMessageUnHovered={this.props.onMessageUnHovered}

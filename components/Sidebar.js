@@ -13,13 +13,11 @@ export default class Sidebar extends Component {
       boxShadow: '-4px 0px 12px 0px rgba(0,0,0,0.24)',
     }
 
-    const messages = this.props.marker.map((message) => {
-      const { uid, properties } = message;
+    const messages = this.props.markers.map((message) => {
       return (
         <Message
-          key={uid}
-          uid={uid}
-          message={properties}
+          key={message._id}
+          message={message}
           onMessageClicked={this.props.onMessageClicked}
           onMessageHovered={this.props.onMessageHovered}
           onMessageUnHovered={this.props.onMessageUnHovered}
