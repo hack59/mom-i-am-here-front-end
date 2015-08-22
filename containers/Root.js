@@ -26,8 +26,14 @@ export default class Root extends Component {
 
     const center = [25.021593, 121.535122];
     const zoom = 17;
+    const bounds = [
+      25.02394568165151,
+      121.53011163356018,
+      25.019240273255264,
+      121.54013236643982,
+    ];
 
-    const markers = this.getMarkers().map((data) => {
+    const markers = this.getMarkers(bounds).map((data) => {
       data.clicked = false;
       data.hovered = false;
       return data;
@@ -37,10 +43,26 @@ export default class Root extends Component {
       markers,
       center,
       zoom,
+      bounds,
     };
   }
 
-  getMarkers() {
+  calcBounds(bounds = this.state.bounds) {
+    // 0: 25.02394568165151
+    // 1: 121.53011163356018
+    // 2: 25.019240273255264
+    // 3: 121.54013236643982
+    const w = [bounds[1], bounds[0]];
+    const x = [bounds[3], bounds[0]];
+    const y = [bounds[3], bounds[2]];
+    const z = [bounds[1], bounds[2]];
+
+    return [w, x, y, z, w];
+  }
+
+  getMarkers(bounds) {
+    const loc = this.calcBounds(bounds);
+
     return [
       {
         _id: 0,
@@ -111,6 +133,7 @@ export default class Root extends Component {
   }
 
   onMessageClicked(_id) {
+    console.log(this.calcBounds());
     const markers = this.state.markers.map((data) => {
       if (! data.clicked && data._id == _id) {
         data.clicked = true;
@@ -150,12 +173,14 @@ export default class Root extends Component {
   }
 
   onBoundsChange(data) {
-    console.log(data);
     const { center, zoom, bounds, marginBounds } = data;
+    const markers = this.getMarkers();
     this.setState({
+      markers,
       center,
       zoom,
-    })
+      bounds,
+    });
   }
 
   render() {
