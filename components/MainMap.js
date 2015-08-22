@@ -13,9 +13,21 @@ export default class MainMap extends Component {
       height: '100%',
     };
 
-    const markers = marker.map((data, key)=> {
+    const markers = marker.map((data)=> {
+      console.log(data);
       const [lat, lng] = data.geometry.coordinates;
-      return <Marker key={key} lat={lat} lng={lng} />
+      return (
+        <Marker
+          key={data.uid}
+          uid={data.uid}
+          lat={lat}
+          lng={lng}
+          hovered={data.properties.hovered}
+          onMessageClicked={this.props.onMessageClicked}
+          onMessageHovered={this.props.onMessageHovered}
+          onMessageUnHovered={this.props.onMessageUnHovered}
+        />
+      );
     });
 
     return (

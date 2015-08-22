@@ -15,7 +15,16 @@ export default class Sidebar extends Component {
 
     const messages = this.props.marker.map((message) => {
       const { uid, properties } = message;
-      return <Message key={uid} uid={uid} message={properties} onMessageClicked={this.props.onMessageClicked}/>
+      return (
+        <Message
+          key={uid}
+          uid={uid}
+          message={properties}
+          onMessageClicked={this.props.onMessageClicked}
+          onMessageHovered={this.props.onMessageHovered}
+          onMessageUnHovered={this.props.onMessageUnHovered}
+        />
+      );
     });
 
     return (

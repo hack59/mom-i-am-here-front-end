@@ -10,9 +10,19 @@ export default class Message extends Component{
     this.props.onMessageClicked(uid);
   }
 
+  onMessageHovered(uid) {
+    this.props.onMessageHovered(uid);
+  }
+
+  onMessageUnHovered(uid) {
+    this.props.onMessageUnHovered(uid);
+  }
+
   render() {
     const { uid, message } = this.props;
     const messageClick = this.onMessageClicked.bind(this, uid);
+    const messageHover = this.onMessageHovered.bind(this, uid);
+    const messageUnHover = this.onMessageUnHovered.bind(this, uid);
     let commentBox;
 
     if (message.clicked) {
@@ -31,7 +41,8 @@ export default class Message extends Component{
 
     return (
       <div>
-        <div className="message">
+        <div className="message" onMouseEnter={messageHover} onMouseLeave={messageUnHover} style={message.hovered ? {
+          backgroundColor: '#eeeeee'} : {}}>
           <h3>{message.title}</h3>
           <hr />
           <p>{message.content}</p>

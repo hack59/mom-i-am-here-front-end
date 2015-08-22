@@ -19,6 +19,7 @@ export default class Root extends Component {
     // });
     const marker = this.getMarker().map((data) => {
       data.properties['clicked'] = false;
+      data.properties['hovered'] = false;
       return data;
     });
 
@@ -120,17 +121,42 @@ export default class Root extends Component {
   }
 
   onMarkerOrMessageHover(uid) {
+    const marker = this.state.marker.map((data) => {
+      if (data.uid == uid) {
+        data.properties.hovered = true;
+      } else {
+        data.properties.hovered = false;
+      }
+      return data;
+    });
 
+    this.setState({ marker });
+  }
+
+  onMarkerOrMessageUnHover(uid) {
+    const marker = this.state.marker.map((data) => {
+      data.properties.hovered = false;
+      return data;
+    });
+
+    this.setState({ marker });
   }
 
   render() {
     const { marker } = this.state;
     return (
       <div>
-        <MainMap marker={marker}/>
+        <MainMap
+          marker={marker}
+          onMessageClicked={::this.onMessageClicked}
+          onMessageHovered={::this.onMarkerOrMessageHover}
+          onMessageUnHovered={::this.onMarkerOrMessageUnHover}
+        />
         <Sidebar
           marker={marker}
           onMessageClicked={::this.onMessageClicked}
+          onMessageHovered={::this.onMarkerOrMessageHover}
+          onMessageUnHovered={::this.onMarkerOrMessageUnHover}
         />
       </div>
     );
