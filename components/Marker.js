@@ -13,8 +13,6 @@ export default class Marker extends Component {
     const K_SIZE = 20;
     const { uid, lat, lng, children } = this.props;
     const styles = {
-      // initially any map object has left top corner at lat lng coordinates
-      // it's on you to set object origin to 0,0 coordinates
       position: 'absolute',
       width: K_SIZE,
       height: K_SIZE,
