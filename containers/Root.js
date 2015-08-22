@@ -35,7 +35,7 @@ export default class Root extends Component {
         type: 'Message',
         geometry: {
           type: 'Point',
-          coordinates: [25.0232548, 121.5344207]
+          coordinates: [25.021667, 121.535386]
         },
         properties: {
           title: 'HachNTU',

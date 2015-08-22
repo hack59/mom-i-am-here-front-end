@@ -10,12 +10,14 @@ export default class Comment extends Component {
     return (
       <div style={styles}>
         <div>{comment.content}</div>
-        <button className="btn btn-sm btn-success hack-btn">
+        <button className="btn btn-sm btn-success-outline hack-btn">
           <span className="fa fa-chevron-up"></span>{comment.good}
         </button>
-        <button className="btn btn-sm btn-danger hack-btn">
+        &nbsp;
+        <button className="btn btn-sm btn-danger-outline hack-btn">
           <span className="fa fa-chevron-down"></span>{comment.bad}
         </button>
+        &nbsp;·&nbsp;
         <span>{comment.time}</span>
       </div>
     );

@@ -47,11 +47,19 @@ export default class Message extends Component{
           <hr />
           <p>{message.content}</p>
           <div>
-            <button className="btn btn-sm btn-success hack-btn"><span className="fa fa-chevron-up"></span>{message.good}</button>
-            <button className="btn btn-sm btn-danger hack-btn"><span className="fa fa-chevron-down"></span>{message.bad}</button>
-            <button  className="btn btn-sm btn-primary hack-btn" onClick={messageClick}>
+            <button className="btn btn-sm btn-success-outline hack-btn">
+              <span className="fa fa-chevron-up"></span>{message.good}
+            </button>
+            &nbsp;
+            <button className="btn btn-sm btn-danger-outline hack-btn">
+              <span className="fa fa-chevron-down"></span>{message.bad}
+            </button>
+            &nbsp;
+            <button className="btn btn-sm btn-primary hack-btn" onClick={messageClick}>
               {message.clicked ? 'Hide' : 'Show'} Comments
             </button>
+            &nbsp;·&nbsp;
+            <span>{message.time}</span>
           </div>
           <div className="comment">
             <form className="form">
