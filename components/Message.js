@@ -38,7 +38,9 @@ export default class Message extends Component{
           <div>
             <button className="btn btn-sm btn-success hack-btn"><span className="fa fa-chevron-up"></span>{message.good}</button>
             <button className="btn btn-sm btn-danger hack-btn"><span className="fa fa-chevron-down"></span>{message.bad}</button>
-            <button  className="btn btn-sm btn-primary hack-btn" onClick={messageClick}>Show Comments</button>
+            <button  className="btn btn-sm btn-primary hack-btn" onClick={messageClick}>
+              {message.clicked ? 'Hide' : 'Show'} Comments
+            </button>
           </div>
           <div className="comment">
             <form className="form">
