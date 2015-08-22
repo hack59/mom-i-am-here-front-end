@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react/addons';
 import Message from './Message';
 import Navbar from './Navbar';
+import CreateBox from './CreateBox';
 
 export default class Sidebar extends Component {
   render() {
@@ -29,6 +30,7 @@ export default class Sidebar extends Component {
       <div style={styles}>
         <div style={{overflow: 'auto', height: '100%'}}>
           <Navbar />
+          <CreateBox />
           {messages}
         </div>
       </div>

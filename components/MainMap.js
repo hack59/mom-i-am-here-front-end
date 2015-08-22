@@ -7,9 +7,8 @@ export default class MainMap extends Component {
     super(props);
   }
 
-  onCenterChange() {
-    console.log(this.refs.map);
-    console.log('change');
+  onBoundsChange(center, zoom, bounds, marginBounds) {
+    this.props.onBoundsChange({center, zoom, bounds, marginBounds});
   }
 
   render() {
@@ -39,11 +38,12 @@ export default class MainMap extends Component {
     });
 
     return (
-      <div style={styles} onMouseUp={::this.onCenterChange}>
+      <div style={styles}>
         <GoogleMap
           ref="map"
-          center={this.props.position}
-          zoom={16} >
+          center={this.props.center}
+          zoom={this.props.zoom}
+          onBoundsChange={::this.onBoundsChange}>
           {markers}
         </GoogleMap>
       </div>

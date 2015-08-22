@@ -24,7 +24,8 @@ export default class Root extends Component {
       // });
     // });
 
-    const position = [25.021593, 121.535122];
+    const center = [25.021593, 121.535122];
+    const zoom = 17;
 
     const markers = this.getMarkers().map((data) => {
       data.clicked = false;
@@ -34,7 +35,8 @@ export default class Root extends Component {
 
     this.state = {
       markers,
-      position,
+      center,
+      zoom,
     };
   }
 
@@ -147,13 +149,24 @@ export default class Root extends Component {
     this.setState({ markers });
   }
 
+  onBoundsChange(data) {
+    console.log(data);
+    const { center, zoom, bounds, marginBounds } = data;
+    this.setState({
+      center,
+      zoom,
+    })
+  }
+
   render() {
-    const { markers, position } = this.state;
+    const { markers, center, zoom } = this.state;
     return (
       <div>
         <MainMap
           markers={markers}
-          position={position}
+          center={center}
+          zoom={zoom}
+          onBoundsChange={::this.onBoundsChange}
           onMarkerHovered={::this.onMarkerOrMessageHover}
           onMarkerUnHovered={::this.onMarkerOrMessageUnHover}
         />
