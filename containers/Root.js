@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import MainMap from '../components/MainMap';
 import Sidebar from '../components/Sidebar';
+import fetch from '../utils/fetch';
 
 const geolocation = (
   'undefined' !== typeof window && navigator && navigator.geolocation || {
@@ -13,7 +14,6 @@ const geolocation = (
 export default class Root extends Component {
   constructor(props) {
     super(props);
-
     // geolocation.getCurrentPosition((position) => {
     //   const { latitude, longitude } = position.coords;
 
@@ -33,18 +33,39 @@ export default class Root extends Component {
       121.54013236643982,
     ];
 
-    const markers = this.getMarkers(bounds).map((data) => {
-      data.clicked = false;
-      data.hovered = false;
-      return data;
-    });
-
     this.state = {
-      markers,
       center,
       zoom,
       bounds,
+      markers: [],
+      logined: this.checkLogin(),
     };
+  }
+
+  componentDidMount() {
+    // this.getMarkers(this.state.bounds)
+    // .then((data) => {
+    //   const markers = data.map((data) => {
+    //     data.clicked = false;
+    //     data.hovered = false;
+    //     return data;
+    //   })
+    //   console.log(markers);
+    //   this.setState({
+    //     markers,
+    //   });
+    // });
+  }
+
+  checkLogin() {
+    if (localStorage.token == undefined) {
+      $.post('http://www.itshowtime.idv.tw/hack59/users/created/')
+      .then((data) => {
+        localStorage.setItem('token', data.token);
+      });
+    }
+
+    return true;
   }
 
   calcBounds(bounds = this.state.bounds) {
@@ -63,36 +84,38 @@ export default class Root extends Component {
   getMarkers(bounds) {
     const loc = this.calcBounds(bounds);
 
-    return [
-      {
-        _id: 0,
-        loc: {
-          lng: 121.535386,
-          lat: 25.021667,
-        },
-        title: 'HachNTU',
-        content: '我在被虐天氣晴',
-        good: 18,
-        bad: 3,
-        didgood: true,
-        didbad: false,
-        time: '2015/8/22 00:15:00',
-      },
-      {
-        _id: 1,
-        loc: {
-          lng: 121.533868,
-          lat: 25.020506,
-        },
-        title: '牛肉麵',
-        content: '好ㄘ',
-        good: 38,
-        bad: 1,
-        didgood: false,
-        didbad: false,
-        time: '2015/8/21 17:15:00',
-      }
-    ]
+    return fetch('http://www.itshowtime.idv.tw/hack59/rooms/search/',{ loc: [loc] });
+
+    // return [
+    //   {
+    //     _id: 0,
+    //     loc: {
+    //       lng: 121.535386,
+    //       lat: 25.021667,
+    //     },
+    //     title: 'HachNTU',
+    //     content: '我在被虐天氣晴',
+    //     good: 18,
+    //     bad: 3,
+    //     didgood: true,
+    //     didbad: false,
+    //     time: '2015/8/22 00:15:00',
+    //   },
+    //   {
+    //     _id: 1,
+    //     loc: {
+    //       lng: 121.533868,
+    //       lat: 25.020506,
+    //     },
+    //     title: '牛肉麵',
+    //     content: '好ㄘ',
+    //     good: 38,
+    //     bad: 1,
+    //     didgood: false,
+    //     didbad: false,
+    //     time: '2015/8/21 17:15:00',
+    //   }
+    // ]
   }
 
   getComments(_id) {
@@ -133,7 +156,6 @@ export default class Root extends Component {
   }
 
   onMessageClicked(_id) {
-    console.log(this.calcBounds());
     const markers = this.state.markers.map((data) => {
       if (! data.clicked && data._id == _id) {
         data.clicked = true;
@@ -174,12 +196,24 @@ export default class Root extends Component {
 
   onBoundsChange(data) {
     const { center, zoom, bounds, marginBounds } = data;
-    const markers = this.getMarkers();
+
     this.setState({
-      markers,
       center,
       zoom,
       bounds,
+    });
+
+    this.getMarkers(bounds)
+    .then((data) => {
+      const markers = data.map((data) => {
+        data.clicked = false;
+        data.hovered = false;
+        return data;
+      });
+
+      this.setState({
+        markers,
+      });
     });
   }
 
