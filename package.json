@@ -1,7 +1,7 @@
 {
-  "name": "counter-redux",
+  "name": "HACK59",
   "version": "0.0.0",
-  "description": "Counter example for redux",
+  "description": "HackNTC team 59",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

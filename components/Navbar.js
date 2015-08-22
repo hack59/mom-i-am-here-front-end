@@ -8,7 +8,7 @@ export default class Navbar extends Component {
         <form className="form-inline navbar-form pull-right">
           <input className="form-control form-control-sm" type="text" placeholder="Search" />
           <span className="form-group">
-            <select className="form-control" id="exampleSelect1">
+            <select className="form-control">
               <option>Top</option>
               <option>Date DESC</option>
               <option>Date ASC</option>

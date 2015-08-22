@@ -15,8 +15,17 @@ export default class Root extends Component {
     super(props);
 
     // geolocation.getCurrentPosition((position) => {
-    //
+    //   const { latitude, longitude } = position.coords;
+
+      // this.setState({
+      //   position: [
+      //     latitude, longitude
+      //   ]
+      // });
     // });
+
+    const position = [25.021593, 121.535122];
+
     const markers = this.getMarkers().map((data) => {
       data.clicked = false;
       data.hovered = false;
@@ -24,7 +33,8 @@ export default class Root extends Component {
     });
 
     this.state = {
-      markers
+      markers,
+      position,
     };
   }
 
@@ -115,6 +125,8 @@ export default class Root extends Component {
   }
 
   onMarkerOrMessageHover(_id) {
+    let position;
+
     const markers = this.state.markers.map((data) => {
       if (data._id == _id) {
         data.hovered = true;
@@ -123,7 +135,6 @@ export default class Root extends Component {
       }
       return data;
     });
-
     this.setState({ markers });
   }
 
@@ -137,14 +148,14 @@ export default class Root extends Component {
   }
 
   render() {
-    const { markers } = this.state;
+    const { markers, position } = this.state;
     return (
       <div>
         <MainMap
           markers={markers}
-          onMessageClicked={::this.onMessageClicked}
-          onMessageHovered={::this.onMarkerOrMessageHover}
-          onMessageUnHovered={::this.onMarkerOrMessageUnHover}
+          position={position}
+          onMarkerHovered={::this.onMarkerOrMessageHover}
+          onMarkerUnHovered={::this.onMarkerOrMessageUnHover}
         />
         <Sidebar
           markers={markers}

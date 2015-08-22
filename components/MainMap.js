@@ -3,6 +3,15 @@ import GoogleMap from 'google-map-react';
 import Marker from './Marker';
 
 export default class MainMap extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  onCenterChange() {
+    console.log(this.refs.map);
+    console.log('change');
+  }
+
   render() {
     const styles = {
       position: 'absolute',
@@ -23,17 +32,17 @@ export default class MainMap extends Component {
           lat={lat}
           lng={lng}
           hovered={hovered}
-          onMessageClicked={this.props.onMessageClicked}
-          onMessageHovered={this.props.onMessageHovered}
-          onMessageUnHovered={this.props.onMessageUnHovered}
+          onMarkerHovered={this.props.onMarkerHovered}
+          onMarkerUnHovered={this.props.onMarkerUnHovered}
         />
       );
     });
 
     return (
-      <div style={styles}>
+      <div style={styles} onMouseUp={::this.onCenterChange}>
         <GoogleMap
-          center={[25.0210596, 121.5353251]}
+          ref="map"
+          center={this.props.position}
           zoom={16} >
           {markers}
         </GoogleMap>
