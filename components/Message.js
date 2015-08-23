@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react/addons';
 import Comment from './Comment';
 import classNames from 'classnames';
+import moment from 'moment';
 
 export default class Message extends Component{
   constructor(props) {
@@ -62,7 +63,7 @@ export default class Message extends Component{
               {message.clicked ? 'Hide' : 'Show'} Comments
             </button>
             &nbsp;·&nbsp;
-            <span>{message.time}</span>
+            <span>{moment(message.created_time, 'X').toNow()}</span>
           </div>
           <div className="comment">
             <form className="form">

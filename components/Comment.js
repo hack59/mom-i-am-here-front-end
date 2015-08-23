@@ -18,7 +18,7 @@ export default class Comment extends Component {
           <span className="fa fa-chevron-down"></span>{comment.bad}
         </button>
         &nbsp;·&nbsp;
-        <span>{comment.time}</span>
+        <span>{moment(comment.created_time, 'X').toNow()}</span>
       </div>
     );
   }
