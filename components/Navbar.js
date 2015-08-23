@@ -4,7 +4,7 @@ export default class Navbar extends Component {
   render() {
     return (
       <nav className="navbar navbar-light bg-faded">
-        <a className="navbar-brand" href="/">HACK59</a>
+        <a className="navbar-brand" href="/">媽我在這</a>
         <form className="form-inline navbar-form pull-right">
           <input className="form-control form-control-sm" type="text" placeholder="Search" />
           <span className="form-group">

@@ -5,12 +5,13 @@ export default function fetch(url, data = {}) {
     setTimeout(() => {
       $.ajax({
         url,
-        data,
+        data: JSON.stringify(data),
         method: 'POST',
         dataType: 'json',
+        contentType: 'application/json',
         headers: {
           token: localStorage.token
-        }
+        },
       })
       .then(data => {
         resolve(data);

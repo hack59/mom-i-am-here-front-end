@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import $ from 'jquery';
 import MainMap from '../components/MainMap';
 import Sidebar from '../components/Sidebar';
 import fetch from '../utils/fetch';
@@ -82,7 +83,10 @@ export default class Root extends Component {
     const [lat, lng] = this.state.center;
 
     fetch('http://www.itshowtime.idv.tw/hack59/rooms/created/', {
-      title, content, loc: {lat, lng}
+      title, content, loc: {
+        lng,
+        lat
+      }
     })
     .then((data) => {
       console.log(data);
@@ -95,11 +99,11 @@ export default class Root extends Component {
   onMessageClicked(_id) {
     const markers = this.state.markers.map((data) => {
       if (! data.clicked && data._id == _id) {
-        this.getComments(_id)
+        return this.getComments(_id)
         .then((res) => {
           data.clicked = true;
           data.comments = res.msg;
-          console.log(data);
+
           return data;
         });
       } else {
@@ -108,7 +112,7 @@ export default class Root extends Component {
         return data;
       }
     });
-    console.log(markers);
+
     this.setState({ markers });
   }
 
@@ -150,6 +154,7 @@ export default class Root extends Component {
   updateMarkers(bounds) {
     this.getMarkers(bounds)
     .then((data) => {
+      console.log(data);
       const markers = data.map((data) => {
         data.clicked = false;
         data.hovered = false;
