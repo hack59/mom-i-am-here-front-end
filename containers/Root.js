@@ -42,21 +42,6 @@ export default class Root extends Component {
     };
   }
 
-  componentDidMount() {
-    // this.getMarkers(this.state.bounds)
-    // .then((data) => {
-    //   const markers = data.map((data) => {
-    //     data.clicked = false;
-    //     data.hovered = false;
-    //     return data;
-    //   })
-    //   console.log(markers);
-    //   this.setState({
-    //     markers,
-    //   });
-    // });
-  }
-
   checkLogin() {
     if (localStorage.token == undefined) {
       $.post('http://www.itshowtime.idv.tw/hack59/users/created/')
@@ -88,46 +73,14 @@ export default class Root extends Component {
   }
 
   getComments(_id) {
-    if (_id == 0) {
-      return [
-        {
-          _id: 0,
-          content: 'ㄇㄉ做不出來卡關啦',
-          good: 3,
-          bad: 0,
-          didgood: false,
-          didbad: false,
-          time: '2015/8/22 03:15:00'
-        },
-        {
-          _id: 1,
-          content: '我烏雲籠罩，幹',
-          good: 5,
-          bad: 1,
-          didgood: false,
-          didbad: false,
-          time: '2015/8/22 03:33:00'
-        }
-      ];
-    } else {
-      return [
-        {
-          _id: 0,
-          content: '我也有吃',
-          good: 6,
-          bad: 0,
-          didgood: false,
-          didbad: false,
-          time: '2015/8/21 18:15:00'
-        }
-      ];
-    }
+    return fetch('http://www.itshowtime.idv.tw/hack59/rooms/search/comment/', {
+      _id
+    });
   }
 
   createMarker(title, content) {
     const [lat, lng] = this.state.center;
-    // console.log(lat);
-    // console.log(lng);
+
     fetch('http://www.itshowtime.idv.tw/hack59/rooms/created/', {
       title, content, loc: {lat, lng}
     })
@@ -142,16 +95,20 @@ export default class Root extends Component {
   onMessageClicked(_id) {
     const markers = this.state.markers.map((data) => {
       if (! data.clicked && data._id == _id) {
-        data.clicked = true;
-        data.comments = this.getComments(_id);
+        this.getComments(_id)
+        .then((res) => {
+          data.clicked = true;
+          data.comments = res.msg;
+          console.log(data);
+          return data;
+        });
       } else {
         data.clicked = false;
         data.comments = null;
+        return data;
       }
-
-      return data;
     });
-
+    console.log(markers);
     this.setState({ markers });
   }
 
