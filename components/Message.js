@@ -8,16 +8,22 @@ export default class Message extends Component{
     super(props);
   }
 
-  onMessageClicked(uid) {
-    this.props.onMessageClicked(uid);
+  onMessageClicked(_id) {
+    this.props.onMessageClicked(_id);
   }
 
-  onMessageHovered(uid) {
-    this.props.onMessageHovered(uid);
+  onMessageHovered(_id) {
+    this.props.onMessageHovered(_id);
   }
 
-  onMessageUnHovered(uid) {
-    this.props.onMessageUnHovered(uid);
+  onMessageUnHovered(_id) {
+    this.props.onMessageUnHovered(_id);
+  }
+
+  onLeaveComment(e, _id) {
+    e.preventDefault();
+    console.log(_id);
+    // this.props.onLeaveComment(_id, content);
   }
 
   render() {
@@ -25,6 +31,7 @@ export default class Message extends Component{
     const messageClick = this.onMessageClicked.bind(this, message._id);
     const messageHover = this.onMessageHovered.bind(this, message._id);
     const messageUnHover = this.onMessageUnHovered.bind(this, message._id);
+    const leaveComment = this.onLeaveComment.bind(this, message._id);
     let commentBox;
 
     if (message.clicked) {
@@ -51,23 +58,23 @@ export default class Message extends Component{
           <hr />
           <p>{message.content}</p>
           <div>
-            <button className="btn btn-sm btn-success-outline hack-btn">
+            <button className="btn btn-sm btn-success-outline hack-btn" disabled>
               <span className="fa fa-chevron-up"></span>{message.push.good}
             </button>
             &nbsp;
-            <button className="btn btn-sm btn-danger-outline hack-btn">
+            <button className="btn btn-sm btn-danger-outline hack-btn" disabled>
               <span className="fa fa-chevron-down"></span>{message.push.bad}
             </button>
             &nbsp;
-            <button className={classNames('btn', 'btn-sm', 'btn-primary', 'hack-btn',{'active': message.clicked})} onClick={messageClick}>
+            <button className={classNames('btn', 'btn-sm', 'btn-primary-outline', 'hack-btn',{'active': message.clicked})} onClick={messageClick} disabled>
               {message.clicked ? 'Hide' : 'Show'} Comments
             </button>
             &nbsp;·&nbsp;
             <span>{moment(message.created_time, 'X').toNow()}</span>
           </div>
           <div className="comment">
-            <form className="form">
-              <input type="email" className="form-control form-control-sm" placeholder="leave a comment for this message..." />
+            <form className="form" onSubmit={leaveComment}>
+              <input type="text" className="form-control form-control-sm" ref="content" placeholder="leave a comment for this message..." disabled/>
             </form>
           </div>
         </div>

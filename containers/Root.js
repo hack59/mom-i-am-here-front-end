@@ -151,6 +151,10 @@ export default class Root extends Component {
     this.updateMarkers(bounds);
   }
 
+  onLeaveComment(_id) {
+
+  }
+
   updateMarkers(bounds) {
     this.getMarkers(bounds)
     .then((data) => {
@@ -185,6 +189,7 @@ export default class Root extends Component {
           onMessageClicked={::this.onMessageClicked}
           onMessageHovered={::this.onMarkerOrMessageHover}
           onMessageUnHovered={::this.onMarkerOrMessageUnHover}
+          onLeaveComment={::this.onLeaveComment}
         />
       </div>
     );

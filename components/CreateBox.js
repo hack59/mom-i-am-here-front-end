@@ -24,7 +24,7 @@ export default class CreateBox extends Component {
     const content = React.findDOMNode(this.refs.content).value.trim();
 
     if (! title || ! content ) {
-      teturn
+      return
     }
 
     this.props.createMarker(title, content);

@@ -22,6 +22,7 @@ export default class Sidebar extends Component {
           onMessageClicked={this.props.onMessageClicked}
           onMessageHovered={this.props.onMessageHovered}
           onMessageUnHovered={this.props.onMessageUnHovered}
+          onLeaveComment={this.props.onLeaveComment}
         />
       );
     });
