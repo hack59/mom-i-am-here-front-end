@@ -30,7 +30,7 @@ export default class Sidebar extends Component {
       <div style={styles}>
         <div style={{overflow: 'auto', height: '100%'}}>
           <Navbar />
-          <CreateBox />
+          <CreateBox createMarker={this.props.createMarker} />
           {messages}
         </div>
       </div>

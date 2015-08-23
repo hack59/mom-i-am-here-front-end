@@ -51,11 +51,11 @@ export default class Message extends Component{
           <p>{message.content}</p>
           <div>
             <button className="btn btn-sm btn-success-outline hack-btn">
-              <span className="fa fa-chevron-up"></span>{message.good}
+              <span className="fa fa-chevron-up"></span>{message.push.good}
             </button>
             &nbsp;
             <button className="btn btn-sm btn-danger-outline hack-btn">
-              <span className="fa fa-chevron-down"></span>{message.bad}
+              <span className="fa fa-chevron-down"></span>{message.push.bad}
             </button>
             &nbsp;
             <button className={classNames('btn', 'btn-sm', 'btn-primary', 'hack-btn',{'active': message.clicked})} onClick={messageClick}>

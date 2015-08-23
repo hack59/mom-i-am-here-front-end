@@ -85,37 +85,6 @@ export default class Root extends Component {
     const loc = this.calcBounds(bounds);
 
     return fetch('http://www.itshowtime.idv.tw/hack59/rooms/search/',{ loc: [loc] });
-
-    // return [
-    //   {
-    //     _id: 0,
-    //     loc: {
-    //       lng: 121.535386,
-    //       lat: 25.021667,
-    //     },
-    //     title: 'HachNTU',
-    //     content: '我在被虐天氣晴',
-    //     good: 18,
-    //     bad: 3,
-    //     didgood: true,
-    //     didbad: false,
-    //     time: '2015/8/22 00:15:00',
-    //   },
-    //   {
-    //     _id: 1,
-    //     loc: {
-    //       lng: 121.533868,
-    //       lat: 25.020506,
-    //     },
-    //     title: '牛肉麵',
-    //     content: '好ㄘ',
-    //     good: 38,
-    //     bad: 1,
-    //     didgood: false,
-    //     didbad: false,
-    //     time: '2015/8/21 17:15:00',
-    //   }
-    // ]
   }
 
   getComments(_id) {
@@ -153,6 +122,21 @@ export default class Root extends Component {
         }
       ];
     }
+  }
+
+  createMarker(title, content) {
+    const [lat, lng] = this.state.center;
+    // console.log(lat);
+    // console.log(lng);
+    fetch('http://www.itshowtime.idv.tw/hack59/rooms/created/', {
+      title, content, loc: {lat, lng}
+    })
+    .then((data) => {
+      console.log(data);
+    })
+    .then(() => {
+      this.updateMarkers();
+    });
   }
 
   onMessageClicked(_id) {
@@ -203,6 +187,10 @@ export default class Root extends Component {
       bounds,
     });
 
+    this.updateMarkers(bounds);
+  }
+
+  updateMarkers(bounds) {
     this.getMarkers(bounds)
     .then((data) => {
       const markers = data.map((data) => {
@@ -231,6 +219,7 @@ export default class Root extends Component {
         />
         <Sidebar
           markers={markers}
+          createMarker={::this.createMarker}
           onMessageClicked={::this.onMessageClicked}
           onMessageHovered={::this.onMarkerOrMessageHover}
           onMessageUnHovered={::this.onMarkerOrMessageUnHover}
